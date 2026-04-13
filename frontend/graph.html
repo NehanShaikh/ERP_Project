@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analytics</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial;
+            background: #f4f4f4;
+        }
+
+        .chart-box {
+    width: 1000px;
+    height: 400px;   /* 👈 ADD THIS */
+    margin: 40px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.back-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    background: #34495e;
+}
+
+    </style>
+</head>
+
+<body>
+
+<button class="back-btn" onclick="goHome()">⬅ Back</button>
+
+<h2>📊 Alert Overview</h2>
+
+<div class="chart-box">
+    <canvas id="chart"></canvas>
+</div>
+
+<script>
+fetch("http://localhost:5000/alerts")
+.then(res => res.json())
+.then(data => {
+
+    let counts = {
+        "Low Stock": 0,
+        "Expiry Alert": 0,
+        "Demand Surge": 0,
+        "Sales Drop": 0
+    };
+
+    data.forEach(alert => {
+        if(counts[alert.alert_type] !== undefined){
+            counts[alert.alert_type]++;
+        }
+    });
+
+    const ctx = document.getElementById('chart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(counts),
+            datasets: [{
+                label: 'Alerts',
+                data: Object.values(counts)
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+});
+
+function goHome() {
+    window.location.href = "index.html";
+}
+
+</script>
+
+</body>
+</html>

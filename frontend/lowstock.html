@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Low Stock Alerts</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background: #f4f4f4;
+        }
+
+        table {
+            margin: 20px auto;
+            width: 70%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .back-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    background: #34495e;
+}
+
+    </style>
+</head>
+
+<body>
+
+<button class="back-btn" onclick="goHome()">⬅ Back</button>
+
+<h2>🔴 Low Stock Alerts</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Message</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+</table>
+
+<script>
+fetch("http://localhost:5000/alerts")
+.then(res => res.json())
+.then(data => {
+    let tbody = document.getElementById("tableBody");
+    tbody.innerHTML = "";
+
+    data.forEach(alert => {
+        if(alert.alert_type === "Low Stock") {
+            let row = `
+                <tr>
+                    <td>${alert.product_name}</td>
+                    <td>${alert.message}</td>
+                    <td>${new Date(alert.created_at).toLocaleString()}</td>
+                </tr>
+            `;
+            tbody.innerHTML += row;
+        }
+    });
+});
+
+function goHome() {
+    window.location.href = "index.html";
+}
+
+</script>
+
+</body>
+</html>

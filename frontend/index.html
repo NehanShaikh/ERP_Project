@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ERP Alert System</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 30px;
+        }
+
+        .container {
+            margin-top: 40px;
+        }
+
+        .btn {
+            display: block;
+            width: 260px;
+            margin: 12px auto;
+            padding: 14px;
+            font-size: 16px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🚨 Intelligent Alert System</h1>
+
+<div class="container">
+    <button class="btn" onclick="goTo('products.html')">📦 View Products</button>
+    <button class="btn" onclick="goTo('lowstock.html')">Low Stock Alerts</button>
+    <button class="btn" onclick="goTo('expiry.html')">Expiry Alerts</button>
+    <button class="btn" onclick="goTo('surge.html')">Demand Surge Alerts</button>
+    <button class="btn" onclick="goTo('drop.html')">Sales Drop Alerts</button>
+    <button class="btn" onclick="goTo('graph.html')">📊 View Analytics</button>
+</div>
+
+<script>
+function goTo(page){
+    window.location.href = page;
+}
+</script>
+
+</body>
+</html>
