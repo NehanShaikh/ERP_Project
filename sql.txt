@@ -1,0 +1,54 @@
+# Create Database
+CREATE DATABASE erp_ai;
+USE erp_ai;
+
+# Inventory
+CREATE TABLE inventory (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(100),
+    stock INT,
+    reorder_level INT
+);
+
+# Sales
+CREATE TABLE sales (
+    sale_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT,
+    quantity INT,
+    date DATE
+);
+
+# Expiry
+CREATE TABLE expiry (
+    batch_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT,
+    expiry_date DATE
+);
+
+# Alerts
+CREATE TABLE alerts (
+    alert_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT,
+    alert_type VARCHAR(50),
+    message TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+# Sample Data
+-- Inventory
+INSERT INTO inventory VALUES
+(1, 'Herbal Oil', 20, 50),
+(2, 'Aloe Vera Gel', 200, 100),
+(3, 'Neem Powder', 10, 30);
+
+-- Sales
+INSERT INTO sales (product_id, quantity, date) VALUES
+(1, 120, '2026-04-01'),
+(1, 150, '2026-04-02'),
+(2, 10, '2026-04-01'),
+(3, 5, '2026-04-01');
+
+-- Expiry
+INSERT INTO expiry (product_id, expiry_date) VALUES
+(1, '2026-04-15'),
+(3, '2026-04-14');
