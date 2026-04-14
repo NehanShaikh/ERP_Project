@@ -77,15 +77,32 @@
 </table>
 
 <script>
-fetch("http://localhost:5000/products")
-.then(res => res.json())
-.then(data => {
+Promise.all([
+    fetch("http://localhost:5000/products").then(res => res.json()),
+    fetch("http://localhost:5000/alerts").then(res => res.json())
+])
+.then(([products, alerts]) => {
+
     let tbody = document.getElementById("tableBody");
+    tbody.innerHTML = "";
 
-    data.forEach(p => {
+    // 👉 Create set of LOW STOCK product IDs
+    let lowStockIds = new Set();
 
-        // Highlight low stock
-        let stockClass = p.stock < p.reorder_level ? "low" : "";
+    alerts.forEach(a => {
+        if (a.alert_type === "Low Stock") {
+            lowStockIds.add(a.product_id);
+        }
+    });
+
+    products.forEach(p => {
+
+        let stockClass = "";
+
+        // ✅ MATCH WITH ALERTS TABLE
+        if (lowStockIds.has(p.product_id)) {
+            stockClass = "low";   // 🔴 same as lowstock page
+        }
 
         let row = `
             <tr>
@@ -95,6 +112,7 @@ fetch("http://localhost:5000/products")
                 <td>${p.reorder_level}</td>
             </tr>
         `;
+
         tbody.innerHTML += row;
     });
 })

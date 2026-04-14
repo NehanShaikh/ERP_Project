@@ -47,12 +47,25 @@
     <button class="btn" onclick="goTo('surge.html')">Demand Surge Alerts</button>
     <button class="btn" onclick="goTo('drop.html')">Sales Drop Alerts</button>
     <button class="btn" onclick="goTo('graph.html')">📊 View Analytics</button>
+    <button onclick="runAlerts()">⚡ Generate Alerts</button>
 </div>
 
 <script>
 function goTo(page){
     window.location.href = page;
 }
+</script>
+
+<script>
+function runAlerts() {
+    fetch("http://localhost:5000/run-alerts")
+    .then(res => res.text())
+    .then(msg => {
+        alert(msg);
+        location.reload();
+    });
+}
+
 </script>
 
 </body>

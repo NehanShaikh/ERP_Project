@@ -54,6 +54,7 @@
 <table>
     <thead>
         <tr>
+            <th>Product ID</th>
             <th>Product Name</th>
             <th>Message</th>
             <th>Time</th>
@@ -73,6 +74,7 @@ fetch("http://localhost:5000/alerts")
         if(alert.alert_type === "Demand Surge") {
             let row = `
                 <tr>
+                    <td>${alert.product_id}</td>
                     <td>${alert.product_name}</td>
                     <td>${alert.message}</td>
                     <td>${new Date(alert.created_at).toLocaleString()}</td>

@@ -24,10 +24,13 @@ product_map = dict(zip(inventory['product_id'], inventory['product_name']))
 cursor.execute("DELETE FROM alerts")
 
 # -------------------------------
-# 🚨 LOW STOCK ALERT
+# 🚨 LOW STOCK ALERT (FIXED)
 # -------------------------------
+
+low_threshold = inventory['stock'].quantile(0.3)
+
 for _, row in inventory.iterrows():
-    if row['stock'] < row['reorder_level']:
+    if row['stock'] <= low_threshold:
         name = row['product_name']
         msg = f"{name} is low in stock"
 
@@ -45,7 +48,7 @@ expiry['expiry_date'] = pd.to_datetime(expiry['expiry_date'])
 for _, row in expiry.iterrows():
     days_left = (row['expiry_date'] - today).days
 
-    if days_left <= 7:
+    if days_left <= 2:
         name = product_map.get(row['product_id'], "Unknown Product")
         msg = f"{name} is expiring in {days_left} days"
 

@@ -40,6 +40,20 @@ app.get("/alerts", (req, res) => {
     });
 });
 
+
+const { exec } = require("child_process");
+
+app.get("/run-alerts", (req, res) => {
+    exec("python alert_engine.py", (error, stdout, stderr) => {
+        if (error) {
+            console.error(error);
+            return res.send("Error running Python script");
+        }
+
+        res.send("Alerts generated successfully!");
+    });
+});
+
 app.listen(5000, () => {
     console.log("Server running on port 5000");
 });
