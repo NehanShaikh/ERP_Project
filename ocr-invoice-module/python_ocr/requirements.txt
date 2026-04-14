@@ -1,0 +1,6 @@
+pytesseract
+opencv-python
+pillow
+pdf2image
+numpy
+mysql-connector-python
